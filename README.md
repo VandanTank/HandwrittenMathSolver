@@ -60,15 +60,16 @@ It combines:
 HandwrittenMathSolve/
 │
 ├── src/
-│ ├── model.py # Core symbol detection + CNN loader
-│ ├── utils.py # Image preprocessing utilities
-│ ├── Train Model.ipynb # CNN training notebook
-│ └── Check symbol dataset.ipynb
+│   ├── model.py                # Core symbol detection + CNN loader
+│   ├── utils.py                # Image preprocessing utilities
+│   ├── Train Model.ipynb       # CNN training notebook
+│   └── Check symbol dataset.ipynb  # Dataset inspection and labeling
 │
-├── calculator.py # Main GUI application
-├── requirements.txt # Dependencies
+├── calculator.py               # Main GUI application
+├── requirements.txt            # Dependencies
 ├── .gitignore
-└── README.md
+├── README.md
+└── LICENSE                     # MIT License
 
 
 ---
@@ -82,7 +83,7 @@ cd HandwrittenMathSolve
 # Create a virtual environment (recommended)
 python -m venv venv
 venv\Scripts\activate    # On Windows
-# source venv/bin/activate  # On macOS/Linux
+source venv/bin/activate  # On macOS/Linux
 
 # Install dependencies
 pip install -r requirements.txt
