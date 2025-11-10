@@ -1,0 +1,6 @@
+flask
+keras
+tensorflow
+numpy
+opencv-python-headless
+idx2numpy

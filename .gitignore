@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# Data and model files (large / generated)
+dataset/
+data.pickle
+debug_*.png
+src/model.h5
+
+# OS
+.DS_Store
+Thumbs.db
+
+# notebooks
+.ipynb_checkpoints/
