@@ -1,16 +1,18 @@
 """
 Author: VANDAN TANK
+Utility helpers for image centering, connected-component cleaning, and sorting.
 """
 
 import numpy as np
 
+
 def find_image_center(img):
-    """Return tuple: (cx, cy) coordinate center of img.
-    Safe if the image is all zeros (returns center of array).
+    """
+    Return (cx, cy): the center of mass of `img`.
+    If the image has no ink (all zeros), returns the geometric center.
     """
     total = np.sum(img)
     if total == 0:
-        # empty image — return geometric center
         h, w = img.shape
         return int(round(w / 2.0)), int(round(h / 2.0))
     m = img / total
@@ -20,11 +22,12 @@ def find_image_center(img):
     cy = int(round(np.sum(dy * np.arange(len(dy))), 0))
     return cx, cy
 
+
 def clean_equivalency_dict(d):
-    """Clean equivalency dict from connected component algorithm.
-    Ensures every key maps to its final representative value.
     """
-    # Resolve chains: a -> b -> c becomes a -> c
+    Resolve equivalency chains produced by a connected-component algorithm.
+    Ensures each key maps to its final representative value.
+    """
     for key in list(d.keys()):
         val = d[key]
         while d.get(val, val) != val:
@@ -32,23 +35,19 @@ def clean_equivalency_dict(d):
         d[key] = val
     return d
 
+
 def sort_by_other_list(this_list, by_this_list):
     """
-    Return `this_list` sorted according to `by_this_list`.
+    Return `this_list` sorted according to the numeric order of `by_this_list`.
 
-    Handles cases where elements of by_this_list may be numpy arrays
-    (e.g. small arrays from image-centering). In that case we convert
-    the key to a scalar (try float(), otherwise use mean()) so sorting
-    is well-defined.
-
-    If lengths mismatch, returns `this_list` unchanged.
+    Converts keys in `by_this_list` to scalars (float). If a key is an array,
+    its mean is used as a fallback. If lengths differ, returns `this_list` unchanged.
     """
     if len(this_list) != len(by_this_list):
         return this_list
 
     pairs = []
     for key, val in zip(by_this_list, this_list):
-        # try direct float conversion
         try:
             k = float(key)
         except Exception:
@@ -58,10 +57,8 @@ def sort_by_other_list(this_list, by_this_list):
             elif arr.size == 1:
                 k = float(arr.reshape(-1)[0])
             else:
-                # take the mean as a fallback scalar
                 k = float(arr.mean())
         pairs.append((k, val))
 
-    # stable sort by key
     pairs.sort(key=lambda t: t[0])
     return [v for _, v in pairs]
